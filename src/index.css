@@ -1,0 +1,9 @@
+.routes-details {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.routes-details > div {
+  width: 50%;
+}
