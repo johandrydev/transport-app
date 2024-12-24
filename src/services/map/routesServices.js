@@ -1,3 +1,5 @@
+import config from "@/config/config";
+
 export const fetchRoutes = async (directionsService, options) => {
   const response = await directionsService.route(options);
   return response;
@@ -6,7 +8,7 @@ export const fetchRoutes = async (directionsService, options) => {
 
 export const fetchTruckServices = async (from_city, to_city) => {
   try {
-    const route = 'http://127.0.0.1:8000/api/v1/get-transport-services'
+    const route = `${config.baseTransportApiUrl}/api/v1/get-transport-services`;
     const queryParams = new URLSearchParams({
       from_city,
       to_city,
