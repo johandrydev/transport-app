@@ -1,22 +1,20 @@
 import React from 'react';
 
 const RouteDetails = ({ selectedRoute, leg, routes, onRouteSelect }) => (
-  <div>
+  <section>
     <h2>{selectedRoute?.summary}</h2>
-    <p>
-      <strong>From:</strong> {leg?.start_address}
-    </p>
-    <p>
-      <strong>To:</strong> {leg?.end_address}
-    </p>
-
-    <h3>Other routes</h3>
-    {routes.map((route, index) => (
+    <div className="route-details">
+      <span><strong>From:</strong> {leg?.start_address}</span>
+      <span><strong>To:</strong> {leg?.end_address}</span>
+      <span><strong>Duration:</strong> {leg?.duration?.text}</span>
+    </div>
+    <h3>Routes available</h3>
+    {routes?.map((route, index) => (
       <button key={index} onClick={() => onRouteSelect(index)}>
         {route.summary}
       </button>
     ))}
-  </div>
+  </section>
 );
 
 export default RouteDetails;

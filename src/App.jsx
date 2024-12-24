@@ -1,16 +1,30 @@
 import Directions from '@/components/Directions';
-import MapService from '@/services/map';
-import { SearchField } from './components/SearchField';
+import { MapProvider } from './context/MapContext';
+import TransportMap from './components/TransportMap';
+import { APIProvider } from '@vis.gl/react-google-maps';
+import config from './config/config';
+import SearhForm from './components/SearchForm';
+import { useLoadScript } from '@react-google-maps/api';
 
 function App() {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: config.googleMaps.apiKey,
+    libraries: ['places'],
+  });
+
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div>
+    <APIProvider apiKey={config.googleMaps.apiKey}>
       <h1>Transport Route Finder</h1>
-      {/* <SearchField /> */}
-      <MapService>
+      <MapProvider>
+        <SearhForm />
+        <TransportMap />
         <Directions />
-      </MapService>
-    </div>
+      </MapProvider>
+    </APIProvider >
   );
 };
 

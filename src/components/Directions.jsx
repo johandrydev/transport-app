@@ -1,30 +1,22 @@
-import { useState } from 'react';
-import useDirections from '@/hooks/useDirections';
 import TruckCompanies from '@/components/TruckCompanies';
 import RouteDetails from '@/components/RouteDetails';
-
-const testTrucksCompanies = [
-  { company: 'XPO Logistics', trucks_per_day: 9 },
-  { company: 'Schneider', trucks_per_day: 6 },
-  { company: 'Landstar Systems', trucks_per_day: 2 },
-];
+import useMapContext from '@/hooks/useMapContext';
 
 const Directions = () => {
-  const [truckCompanies, setTruckCompanies] = useState(testTrucksCompanies);
-  const { routes, setRouteIndex, selectedRoute, leg } = useDirections();
+  const { state, dispatch, selectedRoute, leg } = useMapContext();
 
-  const handleRemoveCompany = (index) => {
-    setTruckCompanies((prev) => prev.filter((_, i) => i !== index));
+  const handleRouteSelect = (index) => {
+    dispatch({ type: "SET_ROUTE_INDEX", payload: index });
   };
 
   return (
     <div className="routes-details">
-      <TruckCompanies truckCompanies={truckCompanies} onRemoveCompany={handleRemoveCompany} />
+      <TruckCompanies/>
       <RouteDetails
         selectedRoute={selectedRoute}
+        routes={state.routes}
         leg={leg}
-        routes={routes}
-        onRouteSelect={setRouteIndex}
+        onRouteSelect={handleRouteSelect}
       />
     </div>
   );
