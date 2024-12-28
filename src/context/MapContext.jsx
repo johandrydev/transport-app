@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import { useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 import { fetchRoutes, fetchTruckServices } from "@/services/map/routesServices";
+import { sanitize } from "@/helper/sanitize";
 
 const MapContext = createContext();
 
@@ -64,7 +65,7 @@ export const MapProvider = ({ children }) => {
       dispatch({ type: "SET_ROUTES", payload: [] })
     })
 
-    fetchTruckServices(state.origin, state.destination).then((response) => {
+    fetchTruckServices(sanitize(state.origin), sanitize(state.destination)).then((response) => {
       dispatch({ type: "SET_TRUCK_SERVICES", payload: response })
     }).catch((error) => {
       console.error("Error fetching truck services:", error)
